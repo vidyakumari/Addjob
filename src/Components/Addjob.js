@@ -1,9 +1,9 @@
 import React from 'react'
 import { FormErrors } from './formError'
-import axios from 'axios'
 import isLoggedIn from '../loginCheck'
 import Input from './Generalcompo/input'
 import Button from './Generalcompo/button'
+import {AddjobActions} from './Redux/Services/Addjob/action'
 
 class Addjob extends React.Component {
   user = JSON.parse(localStorage.getItem('user'))
@@ -77,18 +77,13 @@ class Addjob extends React.Component {
 
   Add = (event) => {
     event.preventDefault();
-    const email = this.user.email
-    const { Profile,Designation,Salary,City } = this.state;
-    axios.post('http://localhost:4000/jobs', {
-      Profile,Designation,Salary,City, email
-    })
-      .then((response) => {
-        console.log(response);
-        this.props.history.push('/');
-      })
-      .catch((error) =>{
-        console.log(error);
-      });
+    this.setState({ submitted: true });
+    const email =  this.user.email
+    const { Profile, Designation, Salary, City } = this.state;
+    const { dispatch } = this.props;
+    if (Profile && Designation && Salary && City) {
+      dispatch(AddjobActions.AddJobs(Profile, Designation,Salary, City, email));
+    }
   }
 
   render() {

@@ -12,6 +12,7 @@ router.post('/admin',datacontroller.user)
 router.post('/company',datacontroller.user)
 router.post('/jobs',datacontroller.jobs)
 router.get('/jobs',datacontroller.getjobs)
+router.get('/jobs/:id',datacontroller.getonejobs)
 router.put('/jobs/:id',datacontroller.jobsupdate);
 router.delete('/jobs/:id',datacontroller.jobsdelete)
 router.post('/jobsapplied',datacontroller.jobsapplied);

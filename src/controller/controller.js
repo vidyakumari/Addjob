@@ -114,9 +114,18 @@ exports.getjobs = (req, res) => {
     });
 };
 
-
+//Retrieve one job
+exports.getonejobs = (req, res) => {
+  jobs.findById(req.params.id)
+    .then(data => {
+      res.json(data);
+    }).catch(err => {
+      res.json(err.message);
+    });
+};
 // Update user
 exports.userupdate = (req, res) => {
+  console.log(req.body)
   if (!!req.body.content) {
     return res.status(400).json({
       message: "error on updating the user"
@@ -127,21 +136,10 @@ exports.userupdate = (req, res) => {
     $set: req.body
   }, { new: true })
     .then(user => {
-      if (!user) {
-        return res.status(404).json({
-          message: "user not found with id " + req.params.id
-        });
-      }
-      res.status(200).json({ user });
+      console.log(user)
+      res.json(user);
     }).catch(err => {
-      if (err.kind === 'ObjectId') {
-        return res.status(404).json({
-          message: "user not found with id " + req.params.id
-        });
-      }
-      return res.status(500).json({
-        message: "Error updating user with id " + req.params.id
-      });
+      console.log(err.message)
     });
 };
 
@@ -169,33 +167,14 @@ exports.userdelete = (req, res) => {
 };
 
 // Update jobpost
-exports.jobsupdate = (req, res) => {
-  if (!!req.body.content) {
-    return res.status(400).json({
-      message: "jobpost content can not be empty"
-    });
-  }
-
-  jobs.findByIdAndUpdate(req.params.id, {
-    $set: req.body
-  }, { new: true })
-    .then(jobs => {
-      if (!jobs) {
-        return res.status(404).send({
-          message: "jobpost not found with id " + req.params.id
-        });
-      }
-      res.status(200).json({ jobs });
-    }).catch(err => {
-      if (err.kind === 'ObjectId') {
-        return res.status(404).json({
-          message: "jobpost not found with id " + req.params.id
-        });
-      }
-      return res.status(500).json({
-        message: "Error updating jobpost with id " + req.params.id
-      });
-    });
+exports.jobsupdate = (req, res, next) => {
+  console.log(req.params.id)
+  console.log(req.body)
+  jobs.findByIdAndUpdate(req.params.id, { $set: req.body }, function(err, data) {
+    console.log(data)
+    if (err) return err
+    res.json(data)
+  })
 };
 
 // Delete jobpost

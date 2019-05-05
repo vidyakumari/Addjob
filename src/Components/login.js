@@ -1,9 +1,8 @@
 import React from 'react'
-import { FormErrors } from './formError'
-import axios from 'axios'
 import isLoggedIn from '../loginCheck'
 import Input from './Generalcompo/input'
 import Button from './Generalcompo/button'
+import { userActions } from './Redux/Services/User/actions';
 
 class Login extends React.Component {
   /* Email = this.props.email;
@@ -21,7 +20,7 @@ class Login extends React.Component {
       passwordValid: false,
       formValid: false,
       authValid: ''
-      
+
     }
   }
 
@@ -46,7 +45,7 @@ class Login extends React.Component {
         break;
       case 'password':
         passwordValid = value.match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/);
-        fieldValidationErrors.password = passwordValid ? '' : ' is not valid,it should contain 1 special character,lowercase letter and uppercase letter';
+        fieldValidationErrors.password = passwordValid ? '' : ' is not valid,it should contain special character,lowercase letter and uppercase letter';
         break;
       default:
         break;
@@ -73,35 +72,22 @@ class Login extends React.Component {
 
   login = (event) => {
     event.preventDefault();
+
+    this.setState({ submitted: true });
     const { email, password } = this.state;
-    axios.post('http://localhost:4000/login', {
-      email, password
-    })
-      .then((response) => {
-        console.log(response);
-        if(response.data !== null){
-        localStorage.setItem('user', JSON.stringify(response.data));
-        this.props.history.push('/')
-        window.location.reload()
-        }
-        else{
-          this.setState({
-              authValid: false
-          })
-        }
-      })
-      .catch(function (error) {
-        console.log(error.message)
-      });
+    const { dispatch } = this.props;
+    if (email && password) {
+      dispatch(userActions.login(email, password));
+    }
   }
 
   render() {
+    const {error} = this.props;
     return (
-
       <div className="body">
         {!isLoggedIn() && <form className="form-group login" onSubmit={this.login}>
           <div>
-            {this.errorClass(this.state.authValid) && <span className="error">Credentials not valid</span>}
+            {error && <span className="error">Credentials not valid</span>}
             <div className="sign">Login</div>
             <div className="row">
               <div className="col-sm-12">
@@ -114,7 +100,7 @@ class Login extends React.Component {
                   onChange={this.handleUserInput}
                   placeholder={'Enter your email'}
                 />
-                 {this.errorClass(this.state.formErrors.email) && <span className="emailerror">Email is not valid</span>}
+                {this.errorClass(this.state.formErrors.email) && <span className="emailerror">Email is not valid</span>}
               </div>
             </div>
 
@@ -129,7 +115,7 @@ class Login extends React.Component {
                   onChange={this.handleUserInput}
                   placeholder={'Enter your password'}
                 />
-                 {this.errorClass(this.state.formErrors.password) && <span className="error">Password must contain 1 special character,1 small case letter and 1 digit</span>}
+                {this.errorClass(this.state.formErrors.password) && <span className="error">Password must contain  special character,smallcase letter, uppercase letter and digit</span>}
               </div>
             </div>
             <div className="row">

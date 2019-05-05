@@ -1,8 +1,8 @@
 import React from 'react'
 import { FormErrors } from './formError'
-import axios from 'axios'
 import isLoggedIn from '../loginCheck'
 import Input from './Generalcompo/input'
+import { userActions } from './Redux/Services/User/actions';
 import Button from './Generalcompo/button'
 
 class Signup extends React.Component {
@@ -77,17 +77,11 @@ class Signup extends React.Component {
 
   Register = (event) => {
     event.preventDefault();
-    const { fullname, email, password, phone } = this.state;
-    axios.post('http://localhost:4000/user', {
-      fullname, email, password, phone
-    })
-      .then((response) => {
-        console.log(response);
-        this.props.history.push('/login');
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const {fullname, email, password, phone } = this.state;
+    const { dispatch } = this.props;
+    if (fullname && email && password && phone) {
+        dispatch(userActions.register(fullname, email, password, phone));
+    }
   }
 
   render() {

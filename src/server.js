@@ -17,7 +17,7 @@ app.use(cors())
 // Configuring the database
 // Connecting to the database
 mongoose.connect(dbConfig.url, {
-    useNewUrlParser: true
+    useNewUrlParser: true, useFindAndModify: false
 }).then(() => {
     console.log("Successfully connected to the database");    
 }).catch(err => {
