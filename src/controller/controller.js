@@ -1,8 +1,8 @@
 const userroles = require('../role')
 const user = require('../user')
 const jobs = require('../jobs')
-//const jobsapplied = require('../role/jobsapplied')
-//const appliedstatus = require('../role/appliedstatus')
+const jobsapplied = require('../AppliedJob')
+const appliedstatus = require('../AppliedStatus')
 
 //Create users
 exports.user = (req, res) => {
@@ -12,16 +12,16 @@ exports.user = (req, res) => {
     });
   } else {
     var roles;
-  /*  if (req.route.path === '/admin') {
-      roles = role[0].value
-    }*/
+    /*  if (req.route.path === '/admin') {
+        roles = role[0].value
+      }*/
     if (req.route.path === '/company') {
       roles = role[1].value
-    } 
+    }
     if (req.route.path === '/user') {
       roles = userroles[2].value
     }
- 
+
     console.log(req.body);
     const details = new user({
       fullname: req.body.fullname,
@@ -42,24 +42,25 @@ exports.user = (req, res) => {
   }
 };
 
-exports.login = async (req,res) => {
+//this function is used to login a user
+exports.login = async (req, res) => {
   console.log(req.body);
-   email= req.body.email;
-   password= req.body.password;
-   try {
-    const data = await user.findOne({'email': req.body.email, 'password': req.body.password})
+  email = req.body.email;
+  password = req.body.password;
+  try {
+    const data = await user.findOne({ 'email': req.body.email, 'password': req.body.password })
     console.log(email, password, data)
-    if(data.email === email && data.password === password){
+    if (data.email === email && data.password === password) {
       res.json(data)
       console.log("Successfully login");
     }
-    else{
-     res.json(null)
+    else {
+      res.json(null)
       console.log("Failed to login");
     }
-   } catch (error) {
-     res.json(null)
-   }
+  } catch (error) {
+    res.json(null)
+  }
 };
 
 
@@ -123,6 +124,7 @@ exports.getonejobs = (req, res) => {
       res.json(err.message);
     });
 };
+
 // Update user
 exports.userupdate = (req, res) => {
   console.log(req.body)
@@ -170,7 +172,7 @@ exports.userdelete = (req, res) => {
 exports.jobsupdate = (req, res, next) => {
   console.log(req.params.id)
   console.log(req.body)
-  jobs.findByIdAndUpdate(req.params.id, { $set: req.body }, function(err, data) {
+  jobs.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err, data) {
     console.log(data)
     if (err) return err
     res.json(data)
@@ -182,7 +184,7 @@ exports.jobsdelete = (req, res) => {
   jobs.findByIdAndRemove(req.params.id)
     .then(jobs => {
       if (!jobs) {
-        return res.status(404).json({
+        return res.json({
           message: "jobpost not found with id " + req.params.id
         });
       }
@@ -193,7 +195,7 @@ exports.jobsdelete = (req, res) => {
           message: "jobpost not found with id " + req.params.id
         });
       }
-      return res.status(500).json({
+      return res.json({
         message: "Could not delete jobpost with id " + req.params.id
       });
     });
@@ -202,51 +204,57 @@ exports.jobsdelete = (req, res) => {
 //apply for a job 
 exports.jobsapplied = async (req, res) => {
   try {
-    const { email } = req.body
-    var users = await user.findOne({ email })
-    const { Company } = req.body
-    var job = await jobs.findOne({ Company })
-    var lat = users.location.coordinates[0]
-    var long = users.location.coordinates[1]
-  
-    if(users.role !==2){
-      throw new Error("only user can apply for the job")
+    const { email, id} = req.body
+    var users = await user.findOne({ 'email': email })
+    console.log(users);
+    var job = await jobs.findOne({ '_id': id })
+    console.log(job);
+    var appliedjob = await jobsapplied.findOne({
+      $and: [{ 'userDetails.fullname': users.fullname }, { 'jobsDetails.Designation': job.Designation },
+      { 'jobsDetails.Company': job.Company }]
+    })
+
+    if (appliedjob !== null) {
+      throw new Error('true')
     }
-    var jobdist = await jobs.find({
-      location: {
-        $near: {
-          $geometry: { type: 'Point', coordinates: [lat, long] },
-          $maxDistance: 5000
+
+    /*  if(users.role !==2){
+        throw new Error("only user can apply for the job")
+      }
+      var jobdist = await jobs.find({
+        location: {
+          $near: {
+            $geometry: { type: 'Point', coordinates: [lat, long] },
+            $maxDistance: 5000
+          }
         }
+      }, (err, data) => {
+        if (err)
+          throw new Error(err)
+        else {
+          return data
+        }
+      })
+      console.log(jobdist)
+      const filterjob = jobdist.filter((job) => {
+        if (job.Company === req.body.Company) {
+          return job
+        }
+      })
+  
+      if (filterjob.length === 0) {
+        throw new Error(req.body.Company + ' has no vacancies in your area')
       }
-    }, (err, data) => {
-      if (err)
-        throw new Error(err)
-      else {
-        return data
+      if (jobdist.length === 0) {
+        throw new Error("You can't apply for the job above 5km range")
       }
-    })
-    console.log(jobdist)
-    const filterjob = jobdist.filter((job) => {
-      if (job.Company === req.body.Company) {
-        return job
-      }
-    })
-
-    if (filterjob.length === 0) {
-      throw new Error(req.body.Company + ' has no vacancies in your area')
-    }
-    if (jobdist.length === 0) {
-      throw new Error("You can't apply for the job above 5km range")
-    }
-
+  */
     const details = new jobsapplied({
       userDetails: {
         fullname: users.fullname,
         email: users.email,
         phone: users.phone,
         password: users.password,
-        location: users.location,
         roles: users.roles
       },
       jobsDetails: {
@@ -254,7 +262,7 @@ exports.jobsapplied = async (req, res) => {
         Profile: job.Profile,
         Designation: job.Designation,
         Salary: job.Salary,
-        location: job.location
+        City: job.City
       },
       Status: appliedstatus[0].value
     })
@@ -262,7 +270,7 @@ exports.jobsapplied = async (req, res) => {
 
     await details.save()
       .then(data => {
-        res.status(201).json({
+        res.json({
           "Message": "Successfully applied"
         })
       })
@@ -271,19 +279,28 @@ exports.jobsapplied = async (req, res) => {
       });
   }
   catch (err) {
-    res.json({
-      error: err.message
-    })
+    console.log(err.message);
+    res.json({ 'isApplied': err.message })
   }
 
 }
 
+//this function is used to update the status of the job applied by the user
+exports.updateStatus = async (req, res, next) => {
+  const { id, Status } = req.body
+  console.log()
+  await jobsapplied.findByIdAndUpdate(id, { $set: { 'Status': Status } }, function (err, data) {
+    console.log(data)
+    if (err) console.log(err.message)
+    res.json(data)
+  })
+};
+
 //Company can retrive the job applied details of their company by passing company name.
 exports.getjobsapplied = (req, res) => {
-  const { Company } = req.body;
-  jobsapplied.find({ 'jobsDetails.Company': Company })
+  jobsapplied.find()
     .then(jobsapplied => {
-      res.status(200).json({ jobsapplied });
+      res.json(jobsapplied);
     }).catch(err => {
       res.status(500).json({
         message: err.message || "Some error occurred while retrieving jobsapplied."

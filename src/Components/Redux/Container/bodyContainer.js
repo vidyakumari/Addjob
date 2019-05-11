@@ -5,7 +5,7 @@ import Body from '../../body'
 function mapStateToProps(state) {
    const {jobs} = state.jobs
    return {
-       jobs: jobs
+       jobs: jobs,
    }
   }
   

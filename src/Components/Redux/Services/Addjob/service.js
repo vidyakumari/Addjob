@@ -25,7 +25,7 @@ async function AddJobs(Profile, Designation, Salary, City, email) {
 
 async function editJobs(id) {
   console.log(id)
-  return await axios.get('http://localhost:4000/jobs/'.concat(id))
+  return await axios.get('http://localhost:4000/jobs/'+id)
   .then((jobs) => {
     console.log(jobs)
       if(jobs != null){
@@ -42,7 +42,7 @@ async function editJobs(id) {
 }
 
 async function updateJobs(id, Profile, Designation, Salary, City) {
-  return await axios.put('http://localhost:4000/jobs/'.concat(id), {Profile, Designation, Salary, City})
+  return await axios.put('http://localhost:4000/jobs/'+id, {Profile, Designation, Salary, City})
   .then((jobs) => {
       if(jobs != null){
       return jobs

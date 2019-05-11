@@ -62,3 +62,4 @@ function updateJobs(id, Profile, Designation, Salary, City) {
   function success(updatejobs) { return { type: AddjobConstants.UPDATE_JOBS_SUCCESS, updatejobs } }
   function failure(error) { return { type:  AddjobConstants.UPDATE_JOBS_FAILURE, error } }
 }
+

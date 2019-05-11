@@ -8,15 +8,16 @@ router.put('/user/:id', datacontroller.userupdate);
 router.delete('/user/:id',datacontroller.userdelete)
 router.post('/user',datacontroller.user)
 router.get('/user',datacontroller.getuser)
+router.get('/jobsapplieds',datacontroller.getjobsapplied)
 router.post('/admin',datacontroller.user)
 router.post('/company',datacontroller.user)
 router.post('/jobs',datacontroller.jobs)
 router.get('/jobs',datacontroller.getjobs)
 router.get('/jobs/:id',datacontroller.getonejobs)
 router.put('/jobs/:id',datacontroller.jobsupdate);
+router.put('/updateStatus',datacontroller.updateStatus);
 router.delete('/jobs/:id',datacontroller.jobsdelete)
 router.post('/jobsapplied',datacontroller.jobsapplied);
-router.get('/jobsapplied',datacontroller.getjobsapplied)
 router.post('/login',datacontroller.login);
 //router.post('/baseimage',controller.base64upload)
 module.exports = router         

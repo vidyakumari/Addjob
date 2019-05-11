@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import isLoggedIn from '../loginCheck'
 import { userActions } from './Redux/Services/User/actions';
+import { ApplyjobActions } from './Redux/Services/ApplyJob/action';
+import  Dashboard from './../Components/messageModal'
 
 class Header extends React.Component {
   constructor(props) {
@@ -17,11 +19,18 @@ class Header extends React.Component {
     })
   }
 
+  applied = (event) => {
+    event.preventDefault();
+    const Company =  this.state.user.fullname
+    const { dispatch } = this.props
+    dispatch(ApplyjobActions.AppliedJobs(Company))
+  }
+
   logout = () => {
     userActions.logout()
   }
+
   render() {
-    console.log(this.state.user)
     return (
       <nav className="navbar navbar-inverse">
         <div className="container-fluid" >
@@ -30,7 +39,8 @@ class Header extends React.Component {
           </div>
           <ul className="nav navbar-nav">
             <li className="active"><a href="/">Home</a></li>
-            {isLoggedIn() && this.state.user.roles === 1 && <li><Link to="/AppliedJobs" className="listbtn" >AppliedJobs</Link></li>}
+            {isLoggedIn() && <li><Link to="/AppliedJobs" className="listbtn" onClick={this.applied}>AppliedJobs</Link></li>}
+           
           </ul>
           {
             !isLoggedIn() && <ul className="nav navbar-nav navbar-right">
@@ -41,6 +51,7 @@ class Header extends React.Component {
           {
             isLoggedIn() && <ul className="nav navbar-nav navbar-right">
               {isLoggedIn() && this.state.user.roles === 1 && <li><Link to="/addJobs" className="fa fa-plus">AddJobs</Link></li>}
+              {isLoggedIn() && this.state.user.roles === 2 && <li><Link><Dashboard/></Link></li>}
               <li><Link to="/profile" className="fa fa-user" aria-hidden="true">Hi! {this.state.user.fullname}</Link></li>
               <li><Link to="/" onClick={this.logout} className="fa fa-sign-in" aria-hidden="true">Logout</Link></li>
             </ul>

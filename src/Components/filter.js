@@ -11,14 +11,14 @@ class Filter extends React.Component {
       city: '',
     }
   }
-  
+
   // it will receive the jobs input as name value pairs
   handleUserInput = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ [name]: value })
   }
-  
+
   //this function is used to filter the data on the basis of condition applied
   FilterData = (event) => {
     event.preventDefault();
@@ -28,16 +28,16 @@ class Filter extends React.Component {
     }
     else {
       data = (job_data.filter((element) => {
-        if (element.city === this.state.city) {
-          return true;
+        if (this.state.city.toLowerCase() && element.City.toLowerCase() !== this.state.city.toLowerCase()) {
+          return false;
         }
-        if (element.Designation === this.state.Designation) {
-          return true;
+        if (this.state.Designation.toLowerCase() && element.Designation.toLowerCase() !== this.state.Designation.toLowerCase()) {
+          return false;
         }
-        if (element.Company === this.state.Company) {
-          return true;
+        if (this.state.Company.toLowerCase() && element.Company.toLowerCase() !== this.state.Company.toLowerCase()) {
+          return false;
         }
-        return false;
+        return true;
       }));
 
     }
@@ -51,7 +51,7 @@ class Filter extends React.Component {
         <form onSubmit={this.FilterData} method="POST">
           <input type="text" placeholder="Company" name="Company" value={this.state.Company} onChange={this.handleUserInput} />
           <input type="text" placeholder="Designation" name="Designation" value={this.state.Designation} onChange={this.handleUserInput} />
-          <input type="text" placeholder="city" name="city" value={this.state.city} onChange={this.handleUserInput} />
+          <input type="text" placeholder="City" name="city" value={this.state.city} onChange={this.handleUserInput} />
           <button type="submit">Search</button>
         </form>
       </div>
