@@ -52,7 +52,7 @@ class Header extends React.Component {
             isLoggedIn() && <ul className="nav navbar-nav navbar-right">
               {isLoggedIn() && this.state.user.roles === 1 && <li><Link to="/addJobs" className="fa fa-plus">AddJobs</Link></li>}
               {isLoggedIn() && this.state.user.roles === 2 && <li><Link><Dashboard/></Link></li>}
-              <li><Link to="/profile" className="fa fa-user" aria-hidden="true">Hi! {this.state.user.fullname}</Link></li>
+              <li><Link to="/profile" className="fa fa-user" aria-hidden="true">{this.state.user.fullname}</Link></li>
               <li><Link to="/" onClick={this.logout} className="fa fa-sign-in" aria-hidden="true">Logout</Link></li>
             </ul>
           }

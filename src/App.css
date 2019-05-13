@@ -103,5 +103,9 @@
 }
 
 .profile{
-  heigth:50%;
+  heigth: 50%;
+}
+
+.count{
+  color: red;
 }

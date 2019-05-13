@@ -51,7 +51,7 @@ class Dashboard extends React.Component {
         }
         </Modal>
         {/* <button type='button' onClick={this.showModal}></button> */}
-        <span>{count}</span><Link onClick={this.showModal} className="fa fa-bell">Notifications</Link>
+        <span className="count">{count}</span><Link onClick={this.showModal} className="fa fa-bell">Notifications</Link>
       </main>
     )
   }

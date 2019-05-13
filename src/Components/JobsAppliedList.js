@@ -55,6 +55,7 @@ class JobsAppliedList extends React.Component {
                       {isLoggedIn && this.user.roles ===2 && <div>Status: {item.Status}</div>}
                     </div>
                     <div className="col-sm-5 cborder" >Job Details
+                    {isLoggedIn() && this.user.roles === 2 && <div>Company: {item.jobsDetails.Company}</div>}
                       <div>Designation: {item.jobsDetails.Designation}</div>
                       <div>Profile: {item.jobsDetails.Profile}</div>
                       <div>Salary: {item.jobsDetails.Salary}</div>
