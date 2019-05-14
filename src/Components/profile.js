@@ -9,15 +9,15 @@ class usersProfile extends React.Component {
     return (
       <div className="row">
         <div className="col-sm-12">
-        <dt>User Profile</dt>
-                    <ul style={{ listStyleType: 'none' }}>
+          <dt>User Profile</dt>
+          <ul style={{ listStyleType: 'none' }}>
             <li className="list-group">
               <div className="col-sm-2 profile" >
                 <img src={image} heigth="100px" width="80px" alt="company"></img>
               </div>
               <div className="col-lg-3 profile" >
                 <dl>
-                  <dt>Fullname:</dt>
+                  <dt>Name:</dt>
                   <dd>{this.user.fullname}</dd>
                 </dl>
                 <dl>

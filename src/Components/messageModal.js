@@ -18,14 +18,14 @@ class Dashboard extends React.Component {
     let count = 0;
     try {
       this.appliedUser.map((item, index) => {
-        if (item.Status === 'Applied' && item.userDetails.fullname === this.User.fullname){
+        if (item.Status === 'Applied' && item.userDetails.fullname === this.User.fullname) {
           count++;
         }
         if (item.Status === 'Shortlisted' && item.userDetails.fullname === this.User.fullname) {
           count++;
         };
         if (item.Status === 'Selected' && item.userDetails.fullname === this.User.fullname) {
-         count++;
+          count++;
         };
       }
       )
@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
               };
             }
             )
-        }
+          }
         </Modal>
         {/* <button type='button' onClick={this.showModal}></button> */}
         <span className="count">{count}</span><Link onClick={this.showModal} className="fa fa-bell">Notifications</Link>

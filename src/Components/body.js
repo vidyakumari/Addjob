@@ -37,47 +37,57 @@ class Body extends React.Component {
 
   render() {
     const job = this.props.jobsdata
-    return (
-      <div className="row">
-        <div className="col-sm-12">
-          <ul style={{ listStyleType: 'none' }}>
-            {
-              job.length === 0 && <h1>Currently no jobs available...</h1>
-            }
-            {
-              job.map((item, index) => {
-                return (
-                  <li key={index} className="card">
-                    <div className="col-sm-2">
-                      <img src={image} heigth="100px" width="80px" alt="company"></img>
-                    </div>
-                    <div className="col-sm-5 cborder" >
-                      <div>{item.Company}</div>
-                      <div>{item.Profile}</div>
-                    </div>
-                    <div className="col-sm-5">
-                      {isLoggedIn() && this.user.roles === 1 && <i id={item._id} className="fa fa-edit editjobbtn" onClick={this.editjob}></i>}
-                      <div>Designation:  {item.Designation}</div>
-                      <div>Salary:  {item.Salary}</div>
-                      <div>City: {item.City}</div>
-                      {/* <div>Location:<br></br>Type: {item.location.type}</div>
-                      <div>{item.location.coordinates[0]}</div>
-                      <div>{item.location.coordinates[1]}</div> */}
-                      <div className="btn">
-                        {isLoggedIn() && this.user.roles === 2 && <button name={item._id} id={'button' + index} onClick={this.applyjobs}>Apply</button>}
-                        {!isLoggedIn() && <button onClick={this.applyjobs}>Apply</button>}
-                      </div>
-                    </div>
-                  </li>
-                )
-              })
-            }
-          </ul>
+    console.log(job)
+    try {
+      if (job === null) {
+        return (<div>No jobs</div>)
+      } else {
+        return (
+          <div className="row">
+            <div className="col-sm-12">
+              <ul style={{ listStyleType: 'none' }}>
+                {
+                  !job &&  <h1>Currently no jobs available...</h1>
+                }
+                {
+                  job.map((item, index) => {
+                    return (
+                      <li key={index} className="card">
+                        <div className="col-sm-4 col-md-4 col-lg-2 col-4">
+                          <img src={image} heigth="100px" width="80px" alt="company"></img>
+                        </div>
+                        <div className="col-sm-4 cborder col-md-4 col-lg-6 col-4" >
+                          <div>{item.Company}</div>
+                          <div>{item.Profile}</div>
+                        </div>
+                        <div className="col-sm-4 col-md-4 col-lg-4 col-4">
+                          {isLoggedIn() && this.user.roles === 1 && <i id={item._id} className="fa fa-edit editjobbtn" onClick={this.editjob}></i>}
+                          <div>Designation:  {item.Designation}</div>
+                          <div>Salary:  {item.Salary}</div>
+                          <div>City: {item.City}</div>
+                          {/* <div>Location:<br></br>Type: {item.location.type}</div>
+                          <div>{item.location.coordinates[0]}</div>
+                          <div>{item.location.coordinates[1]}</div> */}
+                          <div className="btn">
+                            {isLoggedIn() && this.user.roles === 2 && <button name={item._id} id={'button' + index} onClick={this.applyjobs}>Apply</button>}
+                            {!isLoggedIn() && <button onClick={this.applyjobs}>Apply</button>}
+                          </div>
+                        </div>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
 
-        </div>
-      </div>
+            </div>
+          </div>
 
-    )
+        )
+      }
+    } catch (error) {
+
+    }
+    return (<div>No jobs</div>)
   }
 }
 export default Body;

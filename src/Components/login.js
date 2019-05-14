@@ -119,7 +119,7 @@ class Login extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-12 btnShift">
+              <div className="col-sm-12 btnstyle">
                 <Button
                   className="btn btn-success"
                   type={'submit'}

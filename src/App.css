@@ -30,26 +30,21 @@
   margin-left:300px;
 }
 
-.btnShift {
-  margin-left: -250px;
-}
 .App {
   text-align: center;
   background-color: beige;
   height:200%;
   width:100%;
 }
-.login{
-  width: 40%;
-  height: 30%;
-  margin-left: 400px;
-  margin-top:20px;
-}
-.signup{
-  width: 40%;
-  height: 30%;
-  margin-left: 300px;
-  margin-top:20px;
+@media only screen and (max-width:760px){
+  .card {
+    height: 400px;
+    padding: 5px;
+    width: 100%;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+    background-color: azure;
+  }
 }
 .btnstyle{
   margin-left: -800px;
@@ -109,3 +104,33 @@
 .count{
   color: red;
 }
+
+/*Pagination begin*/
+.pagination {
+  margin-bottom: 50px;
+}
+.current-page {
+  font-size: 1.5rem;
+  vertical-align: middle;
+}
+.current-page {
+  line-height: 1;
+}
+ul.pagination {
+  margin-top: 0;
+  margin-bottom: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+    padding: 0.75rem 1rem;
+    min-width: 3.5rem;
+    text-align: center;
+    box-shadow: none !important;
+    border-color: "#ced4da" !important;
+    color: #ced4da;
+    font-weight: 900;
+    font-size: 1rem;
+  
+}
+/*Pagination end*/
+
+

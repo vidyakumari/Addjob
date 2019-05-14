@@ -204,7 +204,7 @@ exports.jobsdelete = (req, res) => {
 //apply for a job 
 exports.jobsapplied = async (req, res) => {
   try {
-    const { email, id} = req.body
+    const { email, id } = req.body
     var users = await user.findOne({ 'email': email })
     console.log(users);
     var job = await jobs.findOne({ '_id': id })

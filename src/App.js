@@ -22,7 +22,7 @@ class App extends React.Component {
           <Route exact path="/" component={Card} />
           <Route path="/login" component={Signin} />
           <Route path="/signup" component={Register} />
-          <Route path="/profile" component={usersProfile}/>
+          <Route path="/profile" component={usersProfile} />
           <Route path="/addJobs" component={Addjob} />
           <Route path="/updatejobs" component={Updatejob} />
           <Route path="/AppliedJobs" component={JobsAppliedList} />
