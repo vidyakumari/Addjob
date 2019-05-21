@@ -3,6 +3,8 @@ import '../App.css'
 import image from '../img.png'
 import {ApplyjobActions} from './Redux/Services/ApplyJob/action'
 import isLoggedIn from '../loginCheck';
+import ChatModal from './chatModal';
+import {Link} from 'react-router-dom'
 
 
 class JobsAppliedList extends React.Component {
@@ -52,7 +54,7 @@ class JobsAppliedList extends React.Component {
                       <div>Fullname: {item.userDetails.fullname}</div>
                       <div>Email: {item.userDetails.email}</div>
                       <div>Phone: {item.userDetails.phone}</div>
-                      {isLoggedIn && this.user.roles ===2 && <div>Status: {item.Status}</div>}
+                      {isLoggedIn() && this.user.roles ===2 && <div>Status: {item.Status}</div>}
                     </div>
                     <div className="col-sm-5 cborder" >Job Details
                     {isLoggedIn() && this.user.roles === 2 && <div>Company: {item.jobsDetails.Company}</div>}
@@ -64,13 +66,13 @@ class JobsAppliedList extends React.Component {
                      {isLoggedIn && this.user.roles === 1 && <div >ChangeStatus: <input onChange={this.handleUserInput} type="text" name="Status" placeholder="Update Status here"></input>
                      <button onClick={this.ChangeStatus} id={item._id} type="submit" value="Update Status">Update Status</button>
                       </div>}
+                      <Link><ChatModal/></Link>
                     </div>
                   </li>
                 )
               })
             }
           </ul>
-
         </div>
       </div>
 

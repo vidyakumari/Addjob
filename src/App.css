@@ -1,5 +1,5 @@
 .card {
-  height: 170px;
+  height: 190px;
   width: 100%;
   padding: 5px;
   border-bottom: 1px solid black;
@@ -11,7 +11,7 @@
 }
 .cborder{
   border-right: 1px solid black;
-  height: 150px;
+  height: 170px;
 }
 .foot{
   width:100%;
@@ -82,7 +82,7 @@
 .modal-main {
   position:fixed;
   background: rgb(65, 64, 64);
-  width: 80%;
+  width: 50%;
   height: auto;
   top:50%;
   left:50%;
@@ -112,13 +112,12 @@
 .current-page {
   font-size: 1.5rem;
   vertical-align: middle;
-}
-.current-page {
   line-height: 1;
 }
 ul.pagination {
   margin-top: 0;
   margin-bottom: 0;
+ 
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   display: inline-block;
     padding: 0.75rem 1rem;
@@ -134,3 +133,71 @@ ul.pagination {
 /*Pagination end*/
 
 
+.messages {
+  overflow: auto;
+  width: 550px;
+  flex-grow: 1;
+  padding: 20px;
+}
+
+h3 .chatTitle {
+  text-align: center;
+  padding: 10px 0;
+  margin: 0;
+  border-bottom: 1px solid #ddd;
+  background-color: #eee;
+}
+
+.chat-input {
+  position: relative;
+  overflow: hidden;
+  padding: 0 40px;
+  flex-shrink: 5;
+  width: 1000%;
+}
+
+.chat-input input[type="text"] {
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: 10px;
+}
+
+.message.from-me .username {
+  display: none;
+}
+
+.message.from-me {
+  margin-left: 400px;
+  display: block;
+  color: black;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.message.from-me .message-body {
+  background-color: #af9570;
+  color: white;
+  
+}
+
+.message {
+  margin-bottom: 20px;
+  color: black;
+}
+.message-body {
+  max-width: 80%;
+  display: inline-block;
+  padding: 20px;
+  background-color: #eee;
+  border: 1px;
+  color: black;
+  border-radius: 5px;
+  padding-right: 50px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: black;
+  margin-bottom: 5px;
+}
